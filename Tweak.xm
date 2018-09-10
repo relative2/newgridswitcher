@@ -25,7 +25,6 @@ static int SWITCHER_STYLE = 2; // 0 = auto, 1 = deck, 2 = grid, 3 = minimum viab
 	return SWITCHER_STYLE;
 }
 -(void)setSwitcherStyle:(NSInteger)style {
-	style = SWITCHER_STYLE;
-	%orig;
+	%orig(SWITCHER_STYLE);
 }
 %end
