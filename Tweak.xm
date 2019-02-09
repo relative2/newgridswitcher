@@ -1,5 +1,5 @@
 /**
- * NewGridSwitcher (iOS 11)
+ * NewGridSwitcher (iOS 11 - iOS 12)
  * Uses adaptations of methods from https://github.com/ioscreatix/LittleX
  */
 static int SWITCHER_STYLE = 2; // 0 = auto, 1 = deck, 2 = grid, 3 = minimum viable
