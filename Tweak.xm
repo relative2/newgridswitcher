@@ -2,15 +2,38 @@
  * NewGridSwitcher (iOS 11 - iOS 12)
  * Uses adaptations of methods from https://github.com/ioscreatix/LittleX
  */
+#include "BSPlatform.h"
+
 static int SWITCHER_STYLE = 2; // 0 = auto, 1 = deck, 2 = grid, 3 = minimum viable
 %hook SBFloatingDockController
 +(BOOL)isFloatingDockSupported {
-	return YES;
+	if (kCFCoreFoundationVersionNumber >= 1556.00) {
+		return %orig;
+	}
+	BSPlatform *platform = [NSClassFromString(@"BSPlatform") sharedInstance];
+	if (platform.homeButtonType == 2) {
+		return YES;
+	}
+	return NO;
 }
 -(BOOL)_systemGestureManagerAllowsFloatingDockGesture {
-	return YES;
+	if (kCFCoreFoundationVersionNumber >= 1556.00) {
+		return %orig;
+	}
+	BSPlatform *platform = [NSClassFromString(@"BSPlatform") sharedInstance];
+	if (platform.homeButtonType == 2) {
+		return YES;
+	}
+	return NO;
 }
 -(BOOL)_canPresentFloatingDock {
+	if (kCFCoreFoundationVersionNumber >= 1556.00) {
+		return %orig;
+	}
+	BSPlatform *platform = [NSClassFromString(@"BSPlatform") sharedInstance];
+	if (platform.homeButtonType == 2) {
+		return YES;
+	}
 	return NO;
 }
 %end
@@ -27,4 +50,16 @@ static int SWITCHER_STYLE = 2; // 0 = auto, 1 = deck, 2 = grid, 3 = minimum viab
 -(void)setSwitcherStyle:(NSInteger)style {
 	%orig(SWITCHER_STYLE);
 }
+/*-(BOOL)simplicityOptionNoControlCenter {
+	return NO;
+}
+-(BOOL)simplicityOptionNoSnapshots {
+	return NO;
+}
+-(BOOL)shouldSimplifyForOptions:(long long)arg1 {
+	return YES;
+}
+-(long long)simplicityOptions {
+	return 69602851;
+}*/
 %end
